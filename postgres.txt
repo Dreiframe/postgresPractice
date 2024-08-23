@@ -1,0 +1,22 @@
+https://tikape-s18.mooc.fi/part2/
+https://blog.logrocket.com/crud-rest-api-node-js-express-postgresql/
+
+SUPERUSER
+postgres
+1234123qwe
+
+MYUSER
+aksu
+1234123qwe
+
+port=5432
+
+set PATH=%PATH%;C:\Program Files\PostgreSQL\16\bin
+
+CREATE DATABASE api;
+
+\c api
+
+\dt //show tables
+
+pgAdmin 4

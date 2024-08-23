@@ -1,0 +1,13 @@
+CREATE TABLE Asiakas (
+    ID SERIAL PRIMARY KEY,
+    nimi varchar(200),
+    puhelinnumero varchar(20),
+    katuosoite varchar(50),
+    postinumero integer,
+    postitoimipaikka varchar(20)
+);
+
+INSERT INTO Asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
+	VALUES ('Pentti', '0409864375', 'Soratie 3 b 10', '07123', 'Penttila');
+
+SELECT * FROM Asiakas;

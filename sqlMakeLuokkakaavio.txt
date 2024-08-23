@@ -1,0 +1,55 @@
+CREATE TABLE Asiakas (
+    id integer PRIMARY KEY,
+    nimi varchar(200),
+    puhelinnumero varchar(20),
+    katuosoite varcar(50),
+    postinumero integer,
+    postitoimipaikka varchar(20)
+);
+
+CREATE TABLE Ravintola (
+    id integer PRIMARY KEY,
+    nimi varchar(200),
+    puhelinnumero varchar(20),
+    katuosoite varcar(50),
+    postinumero integer,
+    postitoimipaikka varchar(20)
+);
+
+CREATE TABLE RaakaAine (
+    id integer PRIMARY KEY,
+    nimi varchar(200)
+);
+
+CREATE TABLE Annos (
+    id integer PRIMARY KEY,
+    ravintola_id integer,
+    nimi varchar(200),
+    koko varchar(30),
+    hinta double,
+    FOREIGN KEY (ravintola_id) REFERENCES Ravintola(id)
+);
+
+CREATE TABLE Tilaus (
+    id integer PRIMARY KEY,
+    asiakas_id integer,
+    aika date,
+    kuljetustapa varchar(40),
+    vastaanotettu boolean,
+    toimitettu boolean,
+    FOREIGN KEY (asiakas_id) REFERENCES Asiakas(id)
+);
+
+CREATE TABLE AnnosRaakaAine (
+    annos_id integer,
+    raaka_aine_id integer,
+    FOREIGN KEY (annos_id) REFERENCES Annos(id),
+    FOREIGN KEY (raaka_aine_id) REFERENCES RaakaAine(id)
+);
+
+CREATE TABLE TilausAnnos (
+    tilaus_id integer,
+    annos_id integer,
+    FOREIGN KEY (tilaus_id) REFERENCES Tilaus(id),
+    FOREIGN KEY (annos_id) REFERENCES Annos(id)
+);
