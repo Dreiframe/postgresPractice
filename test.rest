@@ -21,7 +21,7 @@ content-type: application/json
     "postitoimipaikka": "Askola"
 }
 
-### send wrong json
+### send wrong json  // NOT WORKING YET :/
 POST http://localhost:3001/api/asiakas
 content-type: application/json
 
@@ -32,3 +32,34 @@ content-type: application/json
     "postinumero": 42353, 
     "postitoimipaikka": "Askola"
 }
+
+
+### update existing id
+
+PUT http://localhost:3001/api/asiakas/1
+content-type: application/json
+
+{
+    "nimi": "Pentti", 
+    "puhelinnumero": "0409864375", 
+    "katuosoite": "Soratie 3 b 10", 
+    "postinumero": 42069, 
+    "postitoimipaikka": "Anttila"
+}
+
+
+### update missing id
+PUT http://localhost:3001/api/asiakas/99999
+content-type: application/json
+
+{
+    "nimi": "Pentti", 
+    "puhelinnumero": "0409864375", 
+    "katuosoite": "Soratie 3 b 10", 
+    "postinumero": 42069, 
+    "postitoimipaikka": "Anttila"
+}
+
+
+### delete id
+DELETE http://localhost:3001/api/asiakas/9

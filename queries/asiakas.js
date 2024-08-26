@@ -1,27 +1,3 @@
-const express = require('express')
-const cors = require('cors')
-const app = express()
-app.use(cors())
-app.use(express.json())
-
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'aksu',
-    host: 'localhost',
-    database: 'api',
-    password: '1234123qwe',
-    port: 5432
-})
-
-const morgan = require('morgan')
-morgan.token('body', req => {
-    return JSON.stringify(req.body)
-})
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
-
-//----------------------------------------------------------------------------
-
-
 const getAsiakasAll = () => {
     return new Promise((resolve, reject) => {
         pool.query('SELECT * FROM asiakas ORDER BY id ASC', (error, results) => {
@@ -49,12 +25,7 @@ const getAsiakasByName = (name) => {
 }
 
 
-app.get('/', (request, response) => {
-    response.send('<h1>Hello World!</h1>')
-})
-
-
-app.get('/api/asiakas', (request, response) => {
+const getAllAsiakas = (request, response) => {
     // WHY DID I WRAP POOLQUERY IN PROMISE? WHAT WAS THE POINT???XD
     getAsiakasAll().then(asiakkaat => {
         if (asiakkaat === undefined){
@@ -64,10 +35,10 @@ app.get('/api/asiakas', (request, response) => {
     
         response.status(200).json(asiakkaat)
     })
-})
+}
 
 
-app.get('/api/asiakas/:id', (request, response) => {
+const getAsiakasByID = (request, response) => {
     const id = parseInt(request.params.id)
     pool.query('SELECT * FROM asiakas WHERE id = $1', [id], (error, results) => {
         if (error) {
@@ -81,10 +52,10 @@ app.get('/api/asiakas/:id', (request, response) => {
 
         response.status(200).json(results.rows)
     })
-})
+}
 
 
-app.post('/api/asiakas', async (request, response) => {
+const createAsiakas = async (request, response) => {
     const {nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka} = request.body
 
     // MORE VALIDATION NEEDED
@@ -107,10 +78,10 @@ app.post('/api/asiakas', async (request, response) => {
             response.status(201).json(results.rows[0])
         }
     )
-})
+}
 
 
-app.put('/api/asiakas/:id', (request, response) => {
+const updateAsiakasById = (request, response) => {
     const id = parseInt(request.params.id)
     const {nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka} = request.body
 
@@ -142,10 +113,10 @@ app.put('/api/asiakas/:id', (request, response) => {
         console.log(results.rows.exists)
     })
     */
-})
+}
     
 
-app.delete('/api/asiakas/:id', (request, response) => {
+const deleteAsiakasById = (request, response) => {
     const id = parseInt(request.params.id)
 
     pool.query('DELETE FROM asiakas WHERE id = $1', [id], (error, results) => {
@@ -162,10 +133,4 @@ app.delete('/api/asiakas/:id', (request, response) => {
 
         response.status(200).send(`asiakas deleted with ID: ${id}`)
     })
-})
-
-
-const PORT = 3001
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-})
+}
