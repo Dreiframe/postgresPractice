@@ -14,7 +14,7 @@ POST http://localhost:3001/api/asiakas
 content-type: application/json
 
 {
-    "nimi": "Aleksi", 
+    "nimi": "AleksiTest", 
     "puhelinnumero": "0508673232", 
     "katuosoite": "Jokukatu 12 c 3", 
     "postinumero": 42353, 

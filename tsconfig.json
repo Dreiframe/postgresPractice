@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ES2022",
+        "sourceMap": true,
+        //"outDir": "dist",
+        //src and dist folders should be done XD
+    },
+    "include": ["src/**/*", "index.ts"],
+}
