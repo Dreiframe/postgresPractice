@@ -8,7 +8,7 @@ const pool = new Pool({
     database: 'api',
     password: '1234123qwe',
     port: 5432
-})
+});
 
 
 export const getAllFromTable = (tableName: string) => {
@@ -18,12 +18,12 @@ export const getAllFromTable = (tableName: string) => {
             if (error) {
                 reject(error);
                 return;
-            }
+            };
     
             fulfill(results.rows);
-        })
-    })
-}
+        });
+    });
+};
 
 
 export const getFromTableById = (tableName: string, getId: number) => {
@@ -32,17 +32,17 @@ export const getFromTableById = (tableName: string, getId: number) => {
             if (error){
                 reject(error);
                 return;
-            }
+            };
 
             if (results.rowCount === 0){
                 reject({error: `ID: ${getId} does not exist in table ${tableName}`});
                 return;
-            }
+            };
 
             fulfill(results.rows[0]);
-        })
-    })
-}
+        });
+    });
+};
 
 
 type asiakasType = {
@@ -51,7 +51,7 @@ type asiakasType = {
     katuosoite: string, 
     postinumero: number, 
     postitoimipaikka: string,
-}
+};
 
 export const createAsiakas = (asiakas: asiakasType) => {
     const {nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka} = asiakas;
@@ -60,20 +60,43 @@ export const createAsiakas = (asiakas: asiakasType) => {
         pool.query(
             'INSERT INTO asiakas (nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka) ' + 
             'VALUES ($1, $2, $3, $4, $5) ' + 
-            'ON CONFLICT (nimi) DO NOTHING', //in order for conflict to work table has to have constraint.
+            'ON CONFLICT (nimi) DO NOTHING', //in order for conflict to work the table has to have constraint.
             [nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka],
             (error, results) => {
                 if (error) {
                     reject(error);
                     return;
-                }
+                };
 
                 if (results.rowCount === 0){
                     reject({error: `Asiakas ${nimi} already exists in asiakas table`});
-                }
+                };
                
                 fulfill(results.rowCount);
             }
-        )
-    })
-}
+        );
+    });
+};
+
+
+export const updateAsiakasById = (updateId: number, asiakas: asiakasType) => {
+    const {nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka} = asiakas;
+
+    return new Promise((fulfill, reject) => {
+        pool.query(
+            'UPDATE asiakas SET ' +
+            'nimi = $1, puhelinnumero = $2, katuosoite = $3, postinumero = $4, postitoimipaikka = $5 ' +
+            'WHERE id = $6',
+            //'ON NOT CONFLICT (nimi) DO NOTHING',
+            [nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka, updateId],
+            (error, results) => {
+                if (error) {
+                    reject(error);
+                    return;
+                };
+
+                fulfill(results);
+            }
+        );
+    });
+};

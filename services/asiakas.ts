@@ -1,5 +1,5 @@
 import {Request, Response, NextFunction} from 'express'
-import { getAllFromTable, getFromTableById, createAsiakas } from '../queries/queries.js'
+import { getAllFromTable, getFromTableById, createAsiakas, updateAsiakasById } from '../queries/queries.js'
 
 import Joi from 'joi';
 
@@ -37,7 +37,7 @@ export const getAsiakasById = async (req: Request, res: Response): Promise<JSON>
 }
 
 
-export const postAsiakas = async (req: Request, res: Response, ) => {
+export const postAsiakas = async (req: Request, res: Response) => {
     const validationResult = asiakasSchema.validate(req.body);
 
     if (validationResult.error){
@@ -48,8 +48,28 @@ export const postAsiakas = async (req: Request, res: Response, ) => {
 
     
     try {
-        const queryResponse = await createAsiakas(validationResult.value)
+        await createAsiakas(validationResult.value)
         res.status(200).json({message: `Asiakas ${validationResult.value.nimi} added!`}) 
+    } catch (error) {
+        res.status(500).json(error);
+        return;
+    }
+}
+
+
+export const updateAsiakas = async (req: Request, res: Response) => {
+    const updateId = parseInt(req.params.id);
+    const validationResult = asiakasSchema.validate(req.body);
+
+    if (validationResult.error){
+        return res.status(400).json({
+            error: validationResult.error.details[0].message
+        });
+    }
+
+    try {
+        await updateAsiakasById(updateId, validationResult.value);
+        res.status(200).json({message: `Asiakas ${validationResult.value.nimi} updated!`});
     } catch (error) {
         res.status(500).json(error);
         return;
