@@ -62,4 +62,4 @@ content-type: application/json
 
 
 ### delete id
-DELETE http://localhost:3001/api/asiakas/9
+DELETE http://localhost:3001/api/asiakas/18

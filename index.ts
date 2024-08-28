@@ -9,9 +9,10 @@ app.use(morgan('tiny'));
 
 
 // /api/asiakas ----------------------------------------------------------------------
-import { getAllAsiakkaat, getAsiakasById, postAsiakas, updateAsiakas } from './services/asiakas.js';
+import { getAllAsiakkaat, getAsiakasById, postAsiakas, updateAsiakas, deleteAsiakasById } from './services/asiakas.js';
 app.get('/api/asiakas', getAllAsiakkaat);
 app.get('/api/asiakas/:id', getAsiakasById);
+app.delete('/api/asiakas/:id', deleteAsiakasById);
 app.post('/api/asiakas', postAsiakas);
 app.put('/api/asiakas/:id', updateAsiakas);
 

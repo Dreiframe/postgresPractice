@@ -1,4 +1,3 @@
-import { error } from 'console';
 import pg from 'pg' //npm install @types/pg
 const { Pool } = pg;
 
@@ -13,7 +12,6 @@ const pool = new Pool({
 
 export const getAllFromTable = (tableName: string) => {
     return new Promise((fulfill, reject) => {
-        //pool.query('SELECT * FROM $1 ORDER BY id ASC',[tableName], (error, results) => {
         pool.query(`SELECT * FROM ${tableName} ORDER BY id ASC`, (error, results) => {
             if (error) {
                 reject(error);
@@ -40,6 +38,25 @@ export const getFromTableById = (tableName: string, getId: number) => {
             };
 
             fulfill(results.rows[0]);
+        });
+    });
+};
+
+
+export const deleteFromTableById = (tableName: string, deleteId: number) => {
+    return new Promise((fulfill, reject) => {
+    pool.query(`DELETE FROM ${tableName} WHERE id = ${deleteId}`, (error, results) => {
+            if (error){
+                reject(error);
+                return;
+            };
+
+            if (results.rowCount === 0){
+                reject({error: `ID: ${deleteId} does not exist in table ${tableName}`});
+                return;
+            };
+
+            fulfill(results);
         });
     });
 };
@@ -72,7 +89,7 @@ export const createAsiakas = (asiakas: asiakasType) => {
                     reject({error: `Asiakas ${nimi} already exists in asiakas table`});
                 };
                
-                fulfill(results.rowCount);
+                fulfill(results);
             }
         );
     });

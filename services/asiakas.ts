@@ -1,5 +1,5 @@
-import {Request, Response, NextFunction} from 'express'
-import { getAllFromTable, getFromTableById, createAsiakas, updateAsiakasById } from '../queries/queries.js'
+import { Request, Response } from 'express'
+import { getAllFromTable, getFromTableById, createAsiakas, updateAsiakasById, deleteFromTableById } from '../queries/queries.js'
 
 import Joi from 'joi';
 
@@ -12,7 +12,7 @@ const asiakasSchema = Joi.object({
 })
 
 
-export const getAllAsiakkaat = async (req: Request, res: Response): Promise<JSON> => {
+export const getAllAsiakkaat = async (req: Request, res: Response) => {
     try{
         const queryResponse = await getAllFromTable('asiakas');
         res.status(200).json(queryResponse);
@@ -24,7 +24,7 @@ export const getAllAsiakkaat = async (req: Request, res: Response): Promise<JSON
 }
 
 
-export const getAsiakasById = async (req: Request, res: Response): Promise<JSON> => {
+export const getAsiakasById = async (req: Request, res: Response) => {
     const getId: number = parseInt(req.params.id);
     try {
         const queryResponse = await getFromTableById('asiakas', getId);
@@ -35,6 +35,20 @@ export const getAsiakasById = async (req: Request, res: Response): Promise<JSON>
         return;
     } 
 }
+
+
+export const deleteAsiakasById = async (req: Request, res: Response) => {
+    const deleteId = parseInt(req.params.id);
+
+    try {
+        await deleteFromTableById('asiakas', deleteId);
+        res.status(200).json({message: `Asiakas with ID: ${deleteId} deleted!`});
+        return;
+    } catch (error) {
+        res.status(500).json(error);
+        return;
+    } 
+};
 
 
 export const postAsiakas = async (req: Request, res: Response) => {
