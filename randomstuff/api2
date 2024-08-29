@@ -1,0 +1,141 @@
+CREATE TABLE asiakas (
+    asiakas_id INT GENERATED ALWAYS AS IDENTITY, 
+    nimi VARCHAR(200) NOT NULL,
+    puhelinnumero VARCHAR(20),
+    katuosoite VARCHAR(50),
+    postinumero integer,
+    postitoimipaikka VARCHAR(20),
+    PRIMARY KEY(asiakas_id)
+);
+
+INSERT INTO asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
+	VALUES ('Pentti', '0409864375', 'Soratie 3 b 10', '07123', 'Penttila');
+
+INSERT INTO asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
+	VALUES ('Artturi', '0401236464', 'Kotikatu 1', '05252', 'Kunnas');
+
+INSERT INTO asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
+	VALUES ('Emilia', '0502225346', 'Kyllas 1 c 2', '12345', 'Ojala');
+
+INSERT INTO asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
+	VALUES ('Minni', '0506479797', 'Parkkilankuja 2', '60750', 'Parkkila');
+
+##############################################################################################
+
+CREATE TABLE ravintola (
+    ravintola_id INT GENERATED ALWAYS AS IDENTITY, 
+    nimi VARCHAR(200) NOT NULL,
+    puhelinnumero VARCHAR(20),
+    katuosoite VARCHAR(50),
+    postinumero integer,
+    postitoimipaikka VARCHAR(20),
+    PRIMARY KEY(ravintola_id)
+);
+
+INSERT INTO ravintola(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
+	VALUES ('Parkkilan Kebab', '0406952364', 'Parkkilankuja 13', '60750', 'Parkkila');
+
+INSERT INTO ravintola(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
+	VALUES ('Doneri', '0453052464', 'Paiholankatu 3', '12750', 'Kontiolahti');
+
+##############################################################################################
+
+CREATE TABLE raakaaine (
+    raakaaine_id INT GENERATED ALWAYS AS IDENTITY, 
+    nimi VARCHAR(200) NOT NULL,
+    PRIMARY KEY(raakaaine_id)
+);
+
+INSERT INTO RaakaAine (nimi) VALUES ('kebab');
+INSERT INTO RaakaAine (nimi) VALUES ('ranskalaiset');
+INSERT INTO RaakaAine (nimi) VALUES ('riisi');
+INSERT INTO RaakaAine (nimi) VALUES ('salaatti');
+INSERT INTO RaakaAine (nimi) VALUES ('joku_kastike');
+
+##############################################################################################
+
+CREATE TABLE annos (
+    annos_id INT GENERATED ALWAYS AS IDENTITY, 
+    ravintola_id INT,
+    nimi VARCHAR(200),
+    koko VARCHAR(30),
+    hinta double precision,
+    PRIMARY KEY(annos_id),
+    CONSTRAINT fk_ravintola
+        FOREIGN KEY(ravintola_id) 
+            REFERENCES ravintola(ravintola_id)
+);
+
+INSERT INTO annos(ravintola_id, nimi, koko, hinta)
+    VALUES (1, 'kebab_ranskalaiset', 'iso', 10.50);
+
+INSERT INTO annos(ravintola_id, nimi, koko, hinta)
+    VALUES (2, 'kebab_riisi', 'pieni', 7.25);
+
+##############################################################################################
+
+CREATE TABLE tilaus(
+   tilaus_id INT GENERATED ALWAYS AS IDENTITY,
+   asiakas_id INT,
+   aika DATE,
+   kuljetustapa VARCHAR(40),
+   vastaanotettu boolean,
+   toimitettu boolean,
+   PRIMARY KEY(tilaus_id),
+   CONSTRAINT fk_asiakas
+      FOREIGN KEY(asiakas_id) 
+        REFERENCES asiakas(asiakas_id)
+);
+
+INSERT INTO tilaus(asiakas_id, aika, kuljetustapa, vastaanotettu, toimitettu)
+    VALUES (1, now(), 'toimitus', false, false);
+
+INSERT INTO tilaus(asiakas_id, aika, kuljetustapa, vastaanotettu, toimitettu)
+    VALUES (2, now(), 'toimitus', false, true);
+
+##############################################################################################
+
+CREATE TABLE annosraakaaine (
+    annos_id INT,
+    raakaaine_id INT,
+    CONSTRAINT fk_annos
+      FOREIGN KEY(annos_id) 
+        REFERENCES annos(annos_id),
+    CONSTRAINT fk_raakaaine
+      FOREIGN KEY(raakaaine_id) 
+        REFERENCES raakaaine(raakaaine_id)
+);
+
+INSERT INTO annosraakaaine(annos_id, raakaaine_id) VALUES (1, 1);
+INSERT INTO annosraakaaine(annos_id, raakaaine_id) VALUES (1, 2);
+
+INSERT INTO annosraakaaine(annos_id, raakaaine_id) VALUES (2, 1);
+INSERT INTO annosraakaaine(annos_id, raakaaine_id) VALUES (2, 3);
+
+SELECT annos.nimi AS annos, raakaaine.nimi AS raakaaine
+    FROM annos, raakaaine, annosraakaaine
+    WHERE annos.annos_id = annosraakaaine.annos_id
+        AND raakaaine.raakaaine_id = annosraakaaine.raakaaine_id
+
+##############################################################################################
+
+CREATE TABLE tilausannos (
+    tilaus_id INT,
+    annos_id INT,
+    CONSTRAINT fk_tilaus
+      FOREIGN KEY(tilaus_id) 
+        REFERENCES tilaus(tilaus_id),
+    CONSTRAINT fk_annos
+      FOREIGN KEY(annos_id) 
+        REFERENCES annos(annos_id)
+);
+
+INSERT INTO tilausannos(tilaus_id, annos_id) VALUES (3, 1);
+
+SELECT asiakas.nimi AS asiakas, annos.nimi AS annos
+    FROM asiakas, tilaus, tilausannos, annos
+    WHERE asiakas.asiakas_id = tilaus.asiakas_id
+        AND tilausAnnos.tilaus_id = tilaus.tilaus_id
+        AND annos.annos_id = tilausannos.annos_id;
+
+##############################################################################################

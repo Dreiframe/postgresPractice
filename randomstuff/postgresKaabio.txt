@@ -7,6 +7,18 @@ CREATE TABLE Asiakas (
     postitoimipaikka varchar(20)
 );
 
+
+"SERIAL is the "old" implementation of auto-generated unique values that has been part of Postgres for ages. However that is not part of the SQL standard."
+CREATE TABLE asiakas (
+    asiakas_id INT GENERATED ALWAYS AS IDENTITY, 
+    nimi VARCHAR(200) NOT NULL,
+    puhelinnumero VARCHAR(20),
+    katuosoite VARCHAR(50),
+    postinumero integer,
+    postitoimipaikka VARCHAR(20),
+    PRIMARY KEY(asiakas_id)
+);
+
 INSERT INTO Asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
 	VALUES ('Pentti', '0409864375', 'Soratie 3 b 10', '07123', 'Penttila');
 
@@ -27,3 +39,48 @@ ADD CONSTRAINT asiakas_unq UNIQUE(nimi);
 INSERT INTO asiakas (nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
     VALUES ($1, $2, $3, $4, $5)
     ON CONFLICT (nimi) DO NOTHING';
+
+
+SELECT id FROM asiakas WHERE nimi = 'Artturi';
+
+SELECT nimi, puhelinnumero FROM asiakas;
+
+SELECT nimi, postinumero FROM asiakas WHERE postinumero > 10000;
+
+"DELETE FROM Henkilo WHERE syntymavuosi < 2000 AND nimi != 'Boyce-Codd'"
+
+################################################################################################
+
+CREATE TABLE tilaus(
+   tilaus_id INT GENERATED ALWAYS AS IDENTITY,
+   asiakas_id INT,
+   aika DATE,
+   kuljetustapa VARCHAR(40),
+   vastaanotettu boolean,
+   toimitettu boolean,
+   PRIMARY KEY(tilaus_id),
+   CONSTRAINT fk_asiakas
+      FOREIGN KEY(asiakas_id) 
+        REFERENCES asiakas(asiakas_id)
+);
+
+INSERT INTO tilaus(asiakas_id, aika, kuljetustapa, vastaanotettu, toimitettu)
+    VALUES (1, '29/8/2024', 'toimitus', false, false);
+
+
+CREATE SEQUENCE somenameid_seq;
+ALTER TABLE tablename ALTER COLUMN columnnameprobsid SET DEFAULT nextval('somenameid_seq');
+
+SELECT * FROM asiakas, tilaus;
+
+SELECT * FROM asiakas, tilaus WHERE asiakas.id = tilaus.asiakas_id;
+
+
+
+/* https://tikape-s18.mooc.fi/part3/
+SELECT Asiakas.nimi AS asiakas, Annos.nimi AS annos
+    FROM Asiakas, Tilaus, TilausAnnos, Annos
+    WHERE Asiakas.id = Tilaus.asiakas_id
+        AND TilausAnnos.tilaus_id = Tilaus.id
+        AND Annos.id = TilausAnnos.annos_id;
+*/
