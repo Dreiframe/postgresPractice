@@ -1,3 +1,4 @@
+/*
 import pg from 'pg' //npm install @types/pg
 const { Pool } = pg;
 
@@ -8,6 +9,8 @@ const pool = new Pool({
     password: '1234123qwe',
     port: 5432
 });
+*/
+import {pool} from '../connection/sqlConnection.js'
 
 
 export const getAllFromTable = (tableName: string) => {

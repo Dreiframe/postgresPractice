@@ -1,0 +1,65 @@
+GET http://localhost:3001
+
+### get all ravintolat
+GET http://localhost:3001/api/ravintola
+
+### get one existing ravintola
+GET http://localhost:3001/api/ravintola/1
+
+### get one missing ravintola
+GET http://localhost:3001/api/ravintola/99999
+
+### create ravintola
+POST http://localhost:3001/api/ravintola
+content-type: application/json
+
+{
+    "nimi": "Poron pizzeeria", 
+    "puhelinnumero": "0404206969", 
+    "katuosoite": "Porokukkula 1", 
+    "postinumero": 12345, 
+    "postitoimipaikka": "Porola"
+}
+
+### send wrong json
+POST http://localhost:3001/api/ravintola
+content-type: application/json
+
+{
+    "nimi": 123, 
+    "puhelinnumero": "0508673232", 
+    "katuosoite": "Jokukatu 12 c 3", 
+    "postinumero": 42353, 
+    "postitoimipaikka": "Askola"
+}
+
+
+### update id
+
+PUT http://localhost:3001/api/ravintola/6
+content-type: application/json
+
+{
+    "nimi": "Poron kebab", 
+    "puhelinnumero": "0404206969", 
+    "katuosoite": "Porokukkula 1", 
+    "postinumero": 12345, 
+    "postitoimipaikka": "Porola"
+}
+
+
+### update id bad json
+PUT http://localhost:3001/api/ravintola/99999
+content-type: application/json
+
+{
+    "nimi": 123123, 
+    "puhelinnumero": "0508673232", 
+    "katuosoite": "Jokukatu 12 c 3", 
+    "postinumero": 42353, 
+    "postitoimipaikka": "Askola"
+}
+
+
+### delete id
+DELETE http://localhost:3001/api/ravintola/5

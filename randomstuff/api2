@@ -8,6 +8,9 @@ CREATE TABLE asiakas (
     PRIMARY KEY(asiakas_id)
 );
 
+ALTER TABLE asiakas
+    ADD CONSTRAINT asiakas_unq UNIQUE(nimi);
+
 INSERT INTO asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
 	VALUES ('Pentti', '0409864375', 'Soratie 3 b 10', '07123', 'Penttila');
 
@@ -31,6 +34,9 @@ CREATE TABLE ravintola (
     postitoimipaikka VARCHAR(20),
     PRIMARY KEY(ravintola_id)
 );
+
+ALTER TABLE ravintola
+    ADD CONSTRAINT ravintola_unq UNIQUE(nimi);
 
 INSERT INTO ravintola(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
 	VALUES ('Parkkilan Kebab', '0406952364', 'Parkkilankuja 13', '60750', 'Parkkila');

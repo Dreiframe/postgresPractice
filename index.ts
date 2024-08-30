@@ -16,6 +16,16 @@ app.delete('/api/asiakas/:id', deleteAsiakasById);
 app.post('/api/asiakas', postAsiakas);
 app.put('/api/asiakas/:id', updateAsiakas);
 
+// /api/ravintola ---------------------------------------------------------------------
+import { getAllRavintolat, getRavintolaById, postRavintola, deleteRavintolaById, updateRavintola } from './services/ravintola.js';
+app.get('/api/ravintola', getAllRavintolat);
+app.get('/api/ravintola/:id', getRavintolaById);
+app.delete('/api/ravintola/:id', deleteRavintolaById);
+app.post('/api/ravintola', postRavintola);
+app.put('/api/ravintola/:id', updateRavintola);
+
+
+
 const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
