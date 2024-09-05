@@ -1,0 +1,43 @@
+### create tilaus
+POST http://localhost:3001/api/tilaus
+content-type: application/json
+
+{
+    "asiakas_id": 2,
+    "kuljetustapa": "kotiin kuljetus",
+    "vastaanotettu": false,
+    "toimitettu": false
+}
+
+### create bad tilaus
+POST http://localhost:3001/api/tilaus
+content-type: application/json
+
+{
+    "asiakas_id": "asdasd",
+    "kuljetustapa": "kotiin kuljetus",
+    "vastaanotettu": false,
+    "toimitettu": false
+}
+
+### update tilaus
+PUT http://localhost:3001/api/tilaus/10
+content-type: application/json
+
+{
+    "asiakas_id": 2,
+    "kuljetustapa": "ei",
+    "vastaanotettu": false,
+    "toimitettu": false
+}
+
+### update tilaus bad
+PUT http://localhost:3001/api/tilaus/10
+content-type: application/json
+
+{
+    "asiakas_id": 999999,
+    "kuljetustapa": "noutoasd",
+    "vastaanotettu": false,
+    "toimitettu": false
+}

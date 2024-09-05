@@ -1,69 +1,4 @@
-/*
-import pg from 'pg' //npm install @types/pg
-const { Pool } = pg;
-
-const pool = new Pool({
-    user: 'aksu',
-    host: 'localhost',
-    database: 'api',
-    password: '1234123qwe',
-    port: 5432
-});
-*/
-import {pool} from '../connection/sqlConnection.js'
-
-
-export const getAllFromTable = (tableName: string) => {
-    return new Promise((fulfill, reject) => {
-        pool.query(`SELECT * FROM ${tableName} ORDER BY id ASC`, (error, results) => {
-            if (error) {
-                reject(error);
-                return;
-            };
-    
-            fulfill(results.rows);
-        });
-    });
-};
-
-
-export const getFromTableById = (tableName: string, getId: number) => {
-    return new Promise((fulfill, reject) => {
-        pool.query(`SELECT * FROM ${tableName} WHERE id = ${getId}`, (error, results) => {
-            if (error){
-                reject(error);
-                return;
-            };
-
-            if (results.rowCount === 0){
-                reject({error: `ID: ${getId} does not exist in table ${tableName}`});
-                return;
-            };
-
-            fulfill(results.rows[0]);
-        });
-    });
-};
-
-
-export const deleteFromTableById = (tableName: string, deleteId: number) => {
-    return new Promise((fulfill, reject) => {
-    pool.query(`DELETE FROM ${tableName} WHERE id = ${deleteId}`, (error, results) => {
-            if (error){
-                reject(error);
-                return;
-            };
-
-            if (results.rowCount === 0){
-                reject({error: `ID: ${deleteId} does not exist in table ${tableName}`});
-                return;
-            };
-
-            fulfill(results);
-        });
-    });
-};
-
+import { pool } from '../connection/sqlConnection.js'
 
 type asiakasType = {
     nimi: string, 
@@ -72,6 +7,7 @@ type asiakasType = {
     postinumero: number, 
     postitoimipaikka: string,
 };
+
 
 export const createAsiakas = (asiakas: asiakasType) => {
     const {nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka} = asiakas;
@@ -106,7 +42,7 @@ export const updateAsiakasById = (updateId: number, asiakas: asiakasType) => {
         pool.query(
             'UPDATE asiakas SET ' +
             'nimi = $1, puhelinnumero = $2, katuosoite = $3, postinumero = $4, postitoimipaikka = $5 ' +
-            'WHERE id = $6',
+            'WHERE asiakas_id = $6',
             //'ON NOT CONFLICT (nimi) DO NOTHING',
             [nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka, updateId],
             (error, results) => {

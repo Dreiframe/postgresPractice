@@ -1,5 +1,8 @@
 import { Request, Response } from 'express'
-import { getAllFromTable, getFromTableById, createAsiakas, updateAsiakasById, deleteFromTableById } from '../queries/queries.js'
+//import { getAllFromTable, getFromTableById, deleteFromTableById } from '../queries/queries.js'
+import { getAllFromTable, getFromTableById, deleteFromTableById } from '../queries/generalQueries.js'
+
+import { createAsiakas, updateAsiakasById } from '../queries/asiakasQueries.js';
 
 import Joi from 'joi';
 

@@ -1,5 +1,17 @@
 import { pool } from '../connection/sqlConnection.js'
 
+export const getAllFromTable = (tableName: string) => {
+    return new Promise((fulfill, reject) => {
+        pool.query(`SELECT * FROM ${tableName}`, (error, results) => {
+            if (error) {
+                reject(error);
+                return;
+            };
+    
+            fulfill(results.rows);
+        });
+    });
+};
 
 export const getAllFromTableOrderByColumn = (tableName: string, columnName: string) => {
     return new Promise((fulfill, reject) => {

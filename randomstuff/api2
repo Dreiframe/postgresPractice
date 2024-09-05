@@ -80,6 +80,8 @@ INSERT INTO annos(ravintola_id, nimi, koko, hinta)
 
 ##############################################################################################
 
+#### asiakas_id INT NOT NULL,
+
 CREATE TABLE tilaus(
    tilaus_id INT GENERATED ALWAYS AS IDENTITY,
    asiakas_id INT,
