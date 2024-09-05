@@ -52,6 +52,9 @@ CREATE TABLE raakaaine (
     PRIMARY KEY(raakaaine_id)
 );
 
+ALTER TABLE raakaaine
+    ADD CONSTRAINT raakaaine_unq UNIQUE(nimi);
+
 INSERT INTO RaakaAine (nimi) VALUES ('kebab');
 INSERT INTO RaakaAine (nimi) VALUES ('ranskalaiset');
 INSERT INTO RaakaAine (nimi) VALUES ('riisi');

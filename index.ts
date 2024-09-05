@@ -30,6 +30,11 @@ import { postTilaus, putTilaus } from './services/tilaus.js';
 app.post('/api/tilaus', postTilaus);
 app.put('/api/tilaus/:id', putTilaus);
 
+// /api/tilaus -----------------------------------------------------------------------
+import { postRaakaAine, putRaakaAine } from './services/raakaAine.js'
+app.post('/api/raakaaine', postRaakaAine);
+app.put('/api/raakaaine/:id', putRaakaAine);
+
 // /api/GENERAL ----------------------------------------------------------------------
 import { getAllByTable, getByIdFromTable, deleteByIdFromTable } from './services/generalServices.js'
 app.get('/api/:table', getAllByTable);

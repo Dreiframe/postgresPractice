@@ -1,0 +1,55 @@
+### get all raakaaine
+GET http://localhost:3001/api/raakaaine
+
+### get one existing raakaaine
+GET http://localhost:3001/api/raakaaine/1
+
+### get one missing raakaaine
+GET http://localhost:3001/api/raakaaine/99999
+
+### create raakaaine
+POST http://localhost:3001/api/raakaaine
+content-type: application/json
+
+{
+    "nimi": "juusto2123123"
+}
+
+### send wrong json
+POST http://localhost:3001/api/raakaaine
+content-type: application/json
+
+{
+    "nimi": "should not wrok", 
+    "puhelinnumero": "0508673232", 
+    "katuosoite": "Jokukatu 12 c 3", 
+    "postinumero": 42353, 
+    "postitoimipaikka": "Askola"
+}
+
+
+### update id
+
+PUT http://localhost:3001/api/raakaaine/10
+content-type: application/json
+
+{
+    "nimi": "juusto"
+}
+
+
+### update id bad json
+PUT http://localhost:3001/api/raakaaine/99999
+content-type: application/json
+
+{
+    "nimi": "lol=?", 
+    "puhelinnumero": "0508673232", 
+    "katuosoite": "Jokukatu 12 c 3", 
+    "postinumero": 42353, 
+    "postitoimipaikka": "Askola"
+}
+
+
+### delete id
+DELETE http://localhost:3001/api/raakaaine/9
