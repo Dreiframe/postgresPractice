@@ -111,7 +111,8 @@ CREATE TABLE annosraakaaine (
     raakaaine_id INT,
     CONSTRAINT fk_annos
       FOREIGN KEY(annos_id) 
-        REFERENCES annos(annos_id),
+        REFERENCES annos(annos_id)
+            ON DELETE CASCADE,
     CONSTRAINT fk_raakaaine
       FOREIGN KEY(raakaaine_id) 
         REFERENCES raakaaine(raakaaine_id)
@@ -127,6 +128,7 @@ SELECT annos.nimi AS annos, raakaaine.nimi AS raakaaine
     FROM annos, raakaaine, annosraakaaine
     WHERE annos.annos_id = annosraakaaine.annos_id
         AND raakaaine.raakaaine_id = annosraakaaine.raakaaine_id
+
 
 ##############################################################################################
 

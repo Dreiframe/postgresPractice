@@ -89,6 +89,8 @@ content-type: application/json
     "raakaaine":[13, 10, "lolololl"]
 }
 
+### delete id
+DELETE http://localhost:3001/api/annos/26
 
 ### get all annos test
 GET http://localhost:3001/test/annos

@@ -50,23 +50,15 @@ export const putAnnos = async (req: Request, res: Response) => {
 
 
 // TESTING ______________________________________________________________________________
-import { createRelationAnnosRaakaAine, showAllAnnosRaakaAine } from '../queries/createRelationQueries.js';
+import { createRelationAnnosRaakaAine, showAllAnnosRaakaAine } from '../queries/relationQueries.js';
 
 const bodySchema = Joi.object({
     annos: annosSchema,
     raakaaine: Joi.array().items(Joi.number())
 });
 
-export const postAnnosTest = async (req: Request, res: Response) => {
-    /*
-    const validatedAnnos = annosSchema.validate(req.body.annos);
 
-    if (validatedAnnos.error){
-        return res.status(400).json({
-            "error": validatedAnnos.error.details[0].message
-        });
-    };
-    */
+export const postAnnosTest = async (req: Request, res: Response) => {
     const validationResult = bodySchema.validate(req.body);
 
     if (validationResult.error){
@@ -75,8 +67,9 @@ export const postAnnosTest = async (req: Request, res: Response) => {
         });
     };
 
+    // createAnnos creates new annos and returns the new annos id.
+    // after creating annos we create the relation between annos and raakaaine*multiple
     try {
-        //const queryResult = await createAnnos(validatedAnnos.value);
         await createAnnos(validationResult.value.annos).then(annos_id => {
                 validationResult.value.raakaaine.map(raakaaine_id =>
                     createRelationAnnosRaakaAine(annos_id, raakaaine_id)

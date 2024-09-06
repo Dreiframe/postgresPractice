@@ -1,23 +1,4 @@
-import { error } from 'console';
 import { pool } from '../connection/sqlConnection.js';
-
-export const createRelationAnnosRaakaAine = (annos_id:number, raakaaine_id:number) => {
-    return new Promise((fulfill, reject) => {
-        pool.query(
-            'INSERT INTO annosraakaaine(annos_id, raakaaine_id) ' +
-            'VALUES ($1, $2)',
-            [annos_id, raakaaine_id],
-            (error, results) => {
-                if (error) {
-                    reject(error);
-                    return;
-                }
-
-                fulfill(results);
-            }
-        );
-    });
-};
 
 
 export const showAllAnnosRaakaAine = () => {
@@ -36,6 +17,25 @@ export const showAllAnnosRaakaAine = () => {
                 fulfill(results);
             }
         )
+    });
+};
+
+
+export const createRelationAnnosRaakaAine = (annos_id:number, raakaaine_id:number) => {
+    return new Promise((fulfill, reject) => {
+        pool.query(
+            'INSERT INTO annosraakaaine(annos_id, raakaaine_id) ' +
+            'VALUES ($1, $2)',
+            [annos_id, raakaaine_id],
+            (error, results) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+
+                fulfill(results);
+            }
+        );
     });
 };
 
