@@ -7,7 +7,8 @@ const allowedTableName = (tableName: string): boolean => {
         tableName === 'asiakas' ||
         tableName === 'ravintola' ||
         tableName === 'tilaus' ||
-        tableName === 'raakaaine'
+        tableName === 'raakaaine' ||
+        tableName === 'annos'
     ) {
         return true;
     }

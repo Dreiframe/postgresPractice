@@ -8,6 +8,12 @@ import morgan from 'morgan'; //npm install @types/morgan
 app.use(morgan('tiny'));
 
 
+// /api/GENERAL ----------------------------------------------------------------------
+import { getAllByTable, getByIdFromTable, deleteByIdFromTable } from './services/generalServices.js';
+app.get('/api/:table', getAllByTable);
+app.get('/api/:table/:id', getByIdFromTable);
+app.delete('/api/:table/:id', deleteByIdFromTable);
+
 // /api/asiakas ----------------------------------------------------------------------
 import { getAllAsiakkaat, getAsiakasById, postAsiakas, updateAsiakas, deleteAsiakasById } from './services/asiakas.js';
 //app.get('/api/asiakas', getAllAsiakkaat);
@@ -24,23 +30,23 @@ import { getAllRavintolat, getRavintolaById, postRavintola, deleteRavintolaById,
 app.post('/api/ravintola', postRavintola);
 app.put('/api/ravintola/:id', updateRavintola);
 
-
 // /api/tilaus -----------------------------------------------------------------------
 import { postTilaus, putTilaus } from './services/tilaus.js';
 app.post('/api/tilaus', postTilaus);
 app.put('/api/tilaus/:id', putTilaus);
 
-// /api/tilaus -----------------------------------------------------------------------
-import { postRaakaAine, putRaakaAine } from './services/raakaAine.js'
+// /api/raakaaine --------------------------------------------------------------------
+import { postRaakaAine, putRaakaAine } from './services/raakaAine.js';
 app.post('/api/raakaaine', postRaakaAine);
 app.put('/api/raakaaine/:id', putRaakaAine);
 
-// /api/GENERAL ----------------------------------------------------------------------
-import { getAllByTable, getByIdFromTable, deleteByIdFromTable } from './services/generalServices.js'
-app.get('/api/:table', getAllByTable);
-app.get('/api/:table/:id', getByIdFromTable);
-app.delete('/api/:table/:id', deleteByIdFromTable);
+// /api/tilaus -----------------------------------------------------------------------
+import { postAnnos, putAnnos, postAnnosTest, getAllAnnosRaakaAine } from './services/annos.js';
+app.post('/api/annos', postAnnos);
+app.put('/api/annos/:id', putAnnos);
 
+app.post('/test/annos', postAnnosTest);
+app.get('/test/annos', getAllAnnosRaakaAine);
 
 const PORT = 3001;
 app.listen(PORT, () => {

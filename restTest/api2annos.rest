@@ -1,0 +1,94 @@
+GET http://localhost:3001
+
+### get all annos
+GET http://localhost:3001/api/annos
+
+### get one existing annos
+GET http://localhost:3001/api/annos/1
+
+### get one missing annos
+GET http://localhost:3001/api/annos/99999
+
+### create annos
+POST http://localhost:3001/api/annos
+content-type: application/json
+
+{
+    "ravintola_id": 1,
+    "nimi": "pepperoni pizza",
+    "koko": "medium",
+    "hinta": 11.75
+}
+
+### send wrong json
+POST http://localhost:3001/api/annos
+content-type: application/json
+
+{
+    "ravintola_id": 1,
+    "nimi": "pepperoni pizza",
+    "koko": "medium",
+    "hinta": -11.75
+}
+
+
+### update id
+PUT http://localhost:3001/api/annos/7
+content-type: application/json
+
+{
+    "ravintola_id": 2,
+    "nimi": "juusto pizza",
+    "koko": "large",
+    "hinta": 12.75
+}
+
+
+### update id bad json
+PUT http://localhost:3001/api/annos/7
+content-type: application/json
+
+{
+    "ravintola_id": 2,
+    "nimi": "juusto pizza",
+    "koko": "large",
+    "hinta": -12.75
+}
+
+
+### delete id
+DELETE http://localhost:3001/api/annos/5
+
+
+### create annos TEST
+POST http://localhost:3001/test/annos
+content-type: application/json
+
+{
+    "annos":{
+        "ravintola_id": 1,
+        "nimi": "deleteme",
+        "koko": "medium",
+        "hinta": 11.75
+    },
+    "raakaaine":[13, 10, 12]
+}
+
+
+### create annos TEST BAD
+POST http://localhost:3001/test/annos
+content-type: application/json
+
+{
+    "annos":{
+        "ravintola_id": 1,
+        "nimi": "deleteme",
+        "koko": "medium",
+        "hinta": 11.75
+    },
+    "raakaaine":[13, 10, "lolololl"]
+}
+
+
+### get all annos test
+GET http://localhost:3001/test/annos
