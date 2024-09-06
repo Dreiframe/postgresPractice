@@ -4,7 +4,7 @@ import { pool } from '../connection/sqlConnection.js';
 export const showAllAnnosRaakaAine = () => {
     return new Promise((fulfill, reject) => {
         pool.query(
-            'SELECT annos.nimi AS annos, raakaaine.nimi AS raakaaine '+
+            'SELECT annos.annos_id AS annos_id, annos.nimi AS annos, raakaaine.nimi AS raakaaine '+
             'FROM annos, raakaaine, annosraakaaine '+
             'WHERE annos.annos_id = annosraakaaine.annos_id '+
             'AND raakaaine.raakaaine_id = annosraakaaine.raakaaine_id;',
@@ -14,7 +14,7 @@ export const showAllAnnosRaakaAine = () => {
                     return;
                 }
 
-                fulfill(results);
+                fulfill(results.rows);
             }
         )
     });

@@ -124,7 +124,7 @@ INSERT INTO annosraakaaine(annos_id, raakaaine_id) VALUES (1, 2);
 INSERT INTO annosraakaaine(annos_id, raakaaine_id) VALUES (2, 1);
 INSERT INTO annosraakaaine(annos_id, raakaaine_id) VALUES (2, 3);
 
-SELECT annos.nimi AS annos, raakaaine.nimi AS raakaaine
+SELECT annos.annos_id AS annos_id, annos.nimi AS annos, raakaaine.nimi AS raakaaine
     FROM annos, raakaaine, annosraakaaine
     WHERE annos.annos_id = annosraakaaine.annos_id
         AND raakaaine.raakaaine_id = annosraakaaine.raakaaine_id

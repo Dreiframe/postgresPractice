@@ -14,22 +14,34 @@ POST http://localhost:3001/api/annos
 content-type: application/json
 
 {
-    "ravintola_id": 1,
-    "nimi": "pepperoni pizza",
-    "koko": "medium",
-    "hinta": 11.75
+    "annos":{
+        "ravintola_id": 1,
+        "nimi": "kinnku-juusto pizza",
+        "koko": "medium",
+        "hinta": 11.75
+    },
+    "raakaaine":[13, 10, 12]
 }
 
-### send wrong json
+
+### create annos TEST BAD
 POST http://localhost:3001/api/annos
 content-type: application/json
 
 {
-    "ravintola_id": 1,
-    "nimi": "pepperoni pizza",
-    "koko": "medium",
-    "hinta": -11.75
+    "annos":{
+        "ravintola_id": 1,
+        "nimi": "deleteme",
+        "koko": "medium",
+        "hinta": 11.75
+    },
+    "raakaaine":[13, 10, "lolololl"]
 }
+
+### delete id
+DELETE http://localhost:3001/api/annos/29
+
+
 
 
 ### update id
@@ -55,42 +67,3 @@ content-type: application/json
     "hinta": -12.75
 }
 
-
-### delete id
-DELETE http://localhost:3001/api/annos/5
-
-
-### create annos TEST
-POST http://localhost:3001/test/annos
-content-type: application/json
-
-{
-    "annos":{
-        "ravintola_id": 1,
-        "nimi": "deleteme",
-        "koko": "medium",
-        "hinta": 11.75
-    },
-    "raakaaine":[13, 10, 12]
-}
-
-
-### create annos TEST BAD
-POST http://localhost:3001/test/annos
-content-type: application/json
-
-{
-    "annos":{
-        "ravintola_id": 1,
-        "nimi": "deleteme",
-        "koko": "medium",
-        "hinta": 11.75
-    },
-    "raakaaine":[13, 10, "lolololl"]
-}
-
-### delete id
-DELETE http://localhost:3001/api/annos/26
-
-### get all annos test
-GET http://localhost:3001/test/annos

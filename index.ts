@@ -8,12 +8,6 @@ import morgan from 'morgan'; //npm install @types/morgan
 app.use(morgan('tiny'));
 
 
-// /api/GENERAL ----------------------------------------------------------------------
-import { getAllByTable, getByIdFromTable, deleteByIdFromTable } from './services/generalServices.js';
-app.get('/api/:table', getAllByTable);
-app.get('/api/:table/:id', getByIdFromTable);
-app.delete('/api/:table/:id', deleteByIdFromTable);
-
 // /api/asiakas ----------------------------------------------------------------------
 import { getAllAsiakkaat, getAsiakasById, postAsiakas, updateAsiakas, deleteAsiakasById } from './services/asiakas.js';
 //app.get('/api/asiakas', getAllAsiakkaat);
@@ -41,12 +35,17 @@ app.post('/api/raakaaine', postRaakaAine);
 app.put('/api/raakaaine/:id', putRaakaAine);
 
 // /api/tilaus -----------------------------------------------------------------------
-import { postAnnos, putAnnos, postAnnosTest, getAllAnnosRaakaAine } from './services/annos.js';
+import { postAnnos, putAnnos, getAllAnnosRaakaAine } from './services/annos.js';
 app.post('/api/annos', postAnnos);
 app.put('/api/annos/:id', putAnnos);
+app.get('/api/annosraakaaine', getAllAnnosRaakaAine);
 
-app.post('/test/annos', postAnnosTest);
-app.get('/test/annos', getAllAnnosRaakaAine);
+
+// /api/GENERAL ----------------------------------------------------------------------
+import { getAllByTable, getByIdFromTable, deleteByIdFromTable } from './services/generalServices.js';
+app.get('/api/:table', getAllByTable);
+app.get('/api/:table/:id', getByIdFromTable);
+app.delete('/api/:table/:id', deleteByIdFromTable);
 
 const PORT = 3001;
 app.listen(PORT, () => {
