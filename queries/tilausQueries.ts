@@ -8,11 +8,12 @@ type tilausType = {
 };
 
 
-export const createTilaus = (tilaus: tilausType) => {
+export const createTilaus = (tilaus: tilausType): Promise<number> => {
     return new Promise((fulfill, reject) => {
         pool.query(
             'INSERT INTO tilaus(asiakas_id, aika, kuljetustapa, vastaanotettu, toimitettu) ' + 
-            'VALUES ($1, now(), $2, $3, $4);', 
+            'VALUES ($1, now(), $2, $3, $4) ' +
+            'RETURNING tilaus_id',
             [tilaus.asiakas_id, tilaus.kuljetustapa, tilaus.vastaanotettu, tilaus.toimitettu],
             (error, results) => {
                 if (error){
@@ -20,7 +21,7 @@ export const createTilaus = (tilaus: tilausType) => {
                     return;
                 };
 
-                fulfill(results);
+                fulfill(results.rows[0].tilaus_id);
             }
     );
     });

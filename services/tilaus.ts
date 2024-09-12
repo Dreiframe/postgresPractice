@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { createTilaus, updateTilausById } from '../queries/tilausQueries.js';
-import { showAllTilausAnnos } from '../queries/relationQueries.js';
+import { showAllTilausAnnos, createRelationTilausAnnos } from '../queries/relationQueries.js';
 
 import Joi from 'joi';
 const tilausSchema = Joi.object({
@@ -10,21 +10,31 @@ const tilausSchema = Joi.object({
     toimitettu: Joi.boolean().required()
 });
 
+const bodySchema = Joi.object({
+    tilaus: tilausSchema.required(),
+    annos: Joi.array().items(Joi.number()).required()
+});
+
 
 export const postTilaus = async (req: Request, res: Response) => {
-    const validatedTilaus = tilausSchema.validate(req.body);
-
-    if (validatedTilaus.error){
+    const validationResult = bodySchema.validate(req.body);
+    
+    if (validationResult.error){
         return res.status(400).json({
-            error: validatedTilaus.error.details[0].message
+            "error": validationResult.error.details[0].message
         });
     };
 
+    // createTilaus creates new tilaus and returns the newly created tilaus id.
+    // after creating tilaus we create the relation between tilaus and annos*multiple
     try {
-        await createTilaus(validatedTilaus.value);
-        res.status(200).json({message: 'tilaus added!'}) 
+        await createTilaus(validationResult.value.tilaus).then(tilaus_id => {
+            validationResult.value.annos.map(annos_id => {
+                createRelationTilausAnnos(tilaus_id, annos_id);
+            });
+        });
     } catch (error) {
-        res.status(500).json({error: error});
+        res.status(500).json({"error": error});
         return;
     }
 };

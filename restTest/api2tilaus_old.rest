@@ -3,13 +3,10 @@ POST http://localhost:3001/api/tilaus
 content-type: application/json
 
 {
-    "tilaus":{
-        "asiakas_id": 3,
-        "kuljetustapa": "nouto",
-        "vastaanotettu": false,
-        "toimitettu": true
-    },
-    "annos":[2, 7]
+    "asiakas_id": 2,
+    "kuljetustapa": "kotiin kuljetus",
+    "vastaanotettu": false,
+    "toimitettu": false
 }
 
 ### create bad tilaus
@@ -44,6 +41,3 @@ content-type: application/json
     "vastaanotettu": false,
     "toimitettu": false
 }
-
-### delete tilaus
-DELETE http://localhost:3001/api/tilaus/13

@@ -57,4 +57,23 @@ export const showAllTilausAnnos = () => {
                 fulfill(results.rows);
         });
     });
-}
+};
+
+
+export const createRelationTilausAnnos = (tilaus_id: number, annos_id: number) => {
+    return new Promise((fulfill, reject) => {
+        pool.query(
+            'INSERT INTO tilausannos(tilaus_id, annos_id) ' +
+            'VALUES ($1, $2)',
+            [tilaus_id, annos_id],
+            (error, results) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+
+                fulfill(results);
+            }
+        );
+    });
+};
