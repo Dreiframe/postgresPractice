@@ -25,9 +25,10 @@ app.post('/api/ravintola', postRavintola);
 app.put('/api/ravintola/:id', updateRavintola);
 
 // /api/tilaus -----------------------------------------------------------------------
-import { postTilaus, putTilaus } from './services/tilaus.js';
+import { postTilaus, putTilaus, getAllTilausAnnos } from './services/tilaus.js';
 app.post('/api/tilaus', postTilaus);
 app.put('/api/tilaus/:id', putTilaus);
+app.get('/api/tilausannos', getAllTilausAnnos);
 
 // /api/raakaaine --------------------------------------------------------------------
 import { postRaakaAine, putRaakaAine } from './services/raakaAine.js';

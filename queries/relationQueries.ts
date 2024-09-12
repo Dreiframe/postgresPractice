@@ -40,22 +40,21 @@ export const createRelationAnnosRaakaAine = (annos_id:number, raakaaine_id:numbe
 };
 
 
-/*
-export const createRelationTilausAnnos = (annos_id:number, raakaaine_id:number) => {
+export const showAllTilausAnnos = () => {
     return new Promise((fulfill, reject) => {
         pool.query(
-            'INSERT INTO annosraakaaine(annos_id, raakaaine_id) ' +
-            'VALUES ($1, $2)',
-            [annos_id, raakaaine_id],
+            'SELECT asiakas.nimi AS asiakas, tilaus.tilaus_id as tilaus, annos.nimi AS annos '+
+            'FROM asiakas, tilaus, tilausannos, annos '+
+            'WHERE asiakas.asiakas_id = tilaus.asiakas_id '+
+            'AND tilausAnnos.tilaus_id = tilaus.tilaus_id '+
+            'AND annos.annos_id = tilausannos.annos_id;' ,
             (error, results) => {
                 if (error) {
                     reject(error);
                     return;
                 }
-
-                fulfill(results);
-            }
-        );
+                
+                fulfill(results.rows);
+        });
     });
-};
-*/
+}

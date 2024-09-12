@@ -137,7 +137,8 @@ CREATE TABLE tilausannos (
     annos_id INT,
     CONSTRAINT fk_tilaus
       FOREIGN KEY(tilaus_id) 
-        REFERENCES tilaus(tilaus_id),
+        REFERENCES tilaus(tilaus_id)
+            ON DELETE CASCADE,
     CONSTRAINT fk_annos
       FOREIGN KEY(annos_id) 
         REFERENCES annos(annos_id)
@@ -146,6 +147,12 @@ CREATE TABLE tilausannos (
 INSERT INTO tilausannos(tilaus_id, annos_id) VALUES (3, 1);
 
 SELECT asiakas.nimi AS asiakas, annos.nimi AS annos
+    FROM asiakas, tilaus, tilausannos, annos
+    WHERE asiakas.asiakas_id = tilaus.asiakas_id
+        AND tilausAnnos.tilaus_id = tilaus.tilaus_id
+        AND annos.annos_id = tilausannos.annos_id;
+
+SELECT asiakas.nimi AS asiakas, tilaus.tilaus_id as tilaus, annos.nimi AS annos
     FROM asiakas, tilaus, tilausannos, annos
     WHERE asiakas.asiakas_id = tilaus.asiakas_id
         AND tilausAnnos.tilaus_id = tilaus.tilaus_id

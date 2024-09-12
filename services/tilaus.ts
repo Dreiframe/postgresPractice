@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { createTilaus, updateTilausById } from '../queries/tilausQueries.js';
+import { showAllTilausAnnos } from '../queries/relationQueries.js';
 
 import Joi from 'joi';
 const tilausSchema = Joi.object({
@@ -44,6 +45,17 @@ export const putTilaus = async (req: Request, res: Response) => {
         res.status(200).json({message: 'tilaus updated!'}) 
     } catch (error) {
         res.status(500).json({error: error});
+        return;
+    }
+};
+
+
+export const getAllTilausAnnos = async (req: Request, res: Response) => {
+    try {
+        const queryResults = await showAllTilausAnnos();
+        res.status(200).json({"message": queryResults}) 
+    } catch (error) {
+        res.status(500).json({"error": error});
         return;
     }
 };
