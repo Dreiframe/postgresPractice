@@ -1,3 +1,7 @@
+MOOC TIETOKANTA:
+https://tikape-s18.mooc.fi/part1/
+
+
 https://tikape-s18.mooc.fi/part2/
 https://blog.logrocket.com/crud-rest-api-node-js-express-postgresql/
 

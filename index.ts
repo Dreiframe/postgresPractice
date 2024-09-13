@@ -1,8 +1,10 @@
 // IMPORTS AND SETUP -----------------------------------------------------------------
 //import * as express from 'express';
 import express, { Express, json } from "express";
+import cors from 'cors';
 const app: Express = express();
 app.use(json());
+app.use(cors());
 
 import morgan from 'morgan'; //npm install @types/morgan
 app.use(morgan('tiny'));
