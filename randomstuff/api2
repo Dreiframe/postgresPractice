@@ -23,6 +23,37 @@ INSERT INTO asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaik
 INSERT INTO asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
 	VALUES ('Minni', '0506479797', 'Parkkilankuja 2', '60750', 'Parkkila');
 
+INSERT INTO asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka) VALUES
+    ('Pentti', '0409864375', 'Soratie 3 b 10', '60750', 'Parkkila'),
+    ('Artturi', '0401236464', 'Kotikatu 1', '60750', 'Parkkila'),
+    ('Emilia', '0502225346', 'Kyllas 1 c 2', '60750', 'Parkkila'),
+    ('Minni', '0506479797', 'Parkkilankuja 2', '60750', 'Parkkila'),
+    ('Antti', '0506479797', 'Parkkilankuja 2', '60750', 'Parkkila'),
+    ('Emmi', '0506341636', 'Ojakuja 21 b 3', '60750', 'Parkkila'),
+    ('Jaana', '0451270877', 'Jokukatu 12 c 1', '60750', 'Parkkila'),
+    ('Aleksanteri', '0409801423', 'Ristitie 3', '60750', 'Parkkila'),
+    ('Juho', '0401230867', 'Torikatu 1 a 1', '60750', 'Parkkila'),
+    ('Alisa', '0455689911', 'Osoitetie 63 b12', '60750', 'Parkkila'),
+    ('Niko', '0505551234', 'Metsolanrinne 3', '60750', 'Parkkila'),
+    ('Lini', '0509876543', 'Kaarnis 9', '60750', 'Parkkila'),
+    ('Kare', '0506452152', 'Blablakatu 123 b 123', '60750', 'Parkkila');
+
+
+INSERT INTO asiakas(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka) VALUES
+    ('Pentti', '0409864375', 'Soratie 3 b 10', '07123', 'Penttila'),
+    ('Artturi', '0401236464', 'Kotikatu 1', '05252', 'Kunnas'),
+    ('Emilia', '0502225346', 'Kyllas 1 c 2', '12345', 'Ojala'),
+    ('Minni', '0506479797', 'Parkkilankuja 2', '60750', 'Parkkila')
+    ('Antti', '0506479797', 'Parkkilankuja 2', '60750', 'Parkkila'),
+    ('Emmi', '0506341636', 'Ojakuja 21 b 3', '60321', 'Partsila'),
+    ('Jaana', '0451270877', 'Jokukatu 12 c 1', '80152', 'Pakkila'),
+    ('Aleksanteri', '0409801423', 'Ristitie 3', '60720', 'Pukkila'),
+    ('Juho', '0401230867', 'Torikatu 1 a 1', '12500', 'Paijas'),
+    ('Alisa', '0455689911', 'Osoitetie 63 b12', '30303', 'Plapla'),
+    ('Niko', '0505551234', 'Metsolanrinne 3', '16750', 'Pellos'),
+    ('Lini', '0509876543', 'Kaarnis 9', '60750', 'Parkkila'),
+    ('Kare', '0506452152', 'Blablakatu 123 b 123', '60750', 'Parkkila');
+
 ##############################################################################################
 
 CREATE TABLE ravintola (
@@ -37,6 +68,12 @@ CREATE TABLE ravintola (
 
 ALTER TABLE ravintola
     ADD CONSTRAINT ravintola_unq UNIQUE(nimi);
+
+
+INSERT INTO ravintola(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka) VALUES
+    ('Parkkilan Kebab', '0406952364', 'Parkkilankuja 13', '60750', 'Parkkila')
+    ('Doneri', '0453052464', 'Paiholankatu 3', '60750', 'Parkkila')
+    ('Poron pizzaria', '0404206969', 'Porokukkula 1', '60750', 'Parkkila')
 
 INSERT INTO ravintola(nimi, puhelinnumero, katuosoite, postinumero, postitoimipaikka)
 	VALUES ('Parkkilan Kebab', '0406952364', 'Parkkilankuja 13', '60750', 'Parkkila');
@@ -59,7 +96,17 @@ INSERT INTO RaakaAine (nimi) VALUES ('kebab');
 INSERT INTO RaakaAine (nimi) VALUES ('ranskalaiset');
 INSERT INTO RaakaAine (nimi) VALUES ('riisi');
 INSERT INTO RaakaAine (nimi) VALUES ('salaatti');
-INSERT INTO RaakaAine (nimi) VALUES ('joku_kastike');
+INSERT INTO RaakaAine (nimi) VALUES ('kalender');
+
+INSERT INTO RaakaAine (nimi) VALUES 
+    ('Jauheliha'),
+    ('Ananas'),
+    ('katkarapu'),
+    ('aurajuusto'),
+    ('jalopeno'),
+    ('tonnikala'),
+    ('pekoni');
+
 
 ##############################################################################################
 
@@ -80,6 +127,21 @@ INSERT INTO annos(ravintola_id, nimi, koko, hinta)
 
 INSERT INTO annos(ravintola_id, nimi, koko, hinta)
     VALUES (2, 'kebab_riisi', 'pieni', 7.25);
+
+SELECT ravintola.nimi AS ravintola_nimi,
+    annos.ravintola_id AS ravintola_id,
+    annos.annos_id AS annos_id,
+    annos.nimi AS nimi,
+    annos.koko AS koko,
+    annos.hinta AS hinta
+        FROM annos, ravintola
+        WHERE annos.ravintola_id = ravintola.ravintola_id;
+
+SELECT annos.annos_id AS annos_id, annos.nimi AS annos, raakaaine.nimi AS raakaaine
+    FROM annos, raakaaine, annosraakaaine
+    WHERE annos.annos_id = annosraakaaine.annos_id
+        AND raakaaine.raakaaine_id = annosraakaaine.raakaaine_id
+
 
 ##############################################################################################
 

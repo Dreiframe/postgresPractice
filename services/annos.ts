@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createAnnos, updateAnnosById } from '../queries/annosQueries.js';
+import { createAnnos, updateAnnosById, getAnnosWithRavintolaName } from '../queries/annosQueries.js';
 import { createRelationAnnosRaakaAine, showAllAnnosRaakaAine } from '../queries/relationQueries.js';
 
 
@@ -67,6 +67,17 @@ export const getAllAnnosRaakaAine = async (req: Request, res: Response) => {
     try {
         const queryResults = await showAllAnnosRaakaAine();
         res.status(200).json({"message": queryResults}) 
+    } catch (error) {
+        res.status(500).json({"error": error});
+        return;
+    }
+};
+
+
+export const getAllAnnosAndRavintolaName = async (req: Request, res: Response) => {
+    try {
+        const queryResults = await getAnnosWithRavintolaName();
+        res.status(200).json(queryResults) 
     } catch (error) {
         res.status(500).json({"error": error});
         return;

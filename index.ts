@@ -38,10 +38,11 @@ app.post('/api/raakaaine', postRaakaAine);
 app.put('/api/raakaaine/:id', putRaakaAine);
 
 // /api/tilaus -----------------------------------------------------------------------
-import { postAnnos, putAnnos, getAllAnnosRaakaAine } from './services/annos.js';
+import { postAnnos, putAnnos, getAllAnnosRaakaAine, getAllAnnosAndRavintolaName } from './services/annos.js';
 app.post('/api/annos', postAnnos);
 app.put('/api/annos/:id', putAnnos);
 app.get('/api/annosraakaaine', getAllAnnosRaakaAine);
+app.get('/api/annos', getAllAnnosAndRavintolaName);
 
 
 // /api/GENERAL ----------------------------------------------------------------------

@@ -49,3 +49,28 @@ export const updateAnnosById = (updateId: number, annos: annosType) => {
         );
     });
 };
+
+
+export const getAnnosWithRavintolaName = () => {
+    return new Promise((fulfill, reject) => {
+        pool.query(
+            'SELECT ravintola.nimi AS ravintola_nimi,'+
+            'annos.ravintola_id AS ravintola_id,'+
+            'annos.annos_id AS annos_id,'+
+            'annos.nimi AS nimi,'+
+            'annos.koko AS koko,'+
+            'annos.hinta AS hinta'+
+            '   FROM annos, ravintola'+
+            '   WHERE annos.ravintola_id = ravintola.ravintola_id;',
+            (error, results) => {
+                if (error){
+                    reject(error);
+                    return;
+                };
+
+                fulfill(results.rows);
+                return;
+            }
+        );
+    });
+};
